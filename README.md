@@ -65,12 +65,46 @@ app/dashboard: Componente que muestra varias secciones del Dashboard, como la li
     Los usuarios pueden decidir qué tipo de anuncios prefieren recibir en la plataforma.
 
 
-# PRUEBAS DE EJECUCION
+# VERIFICACION DEL LOGIN
+1. LoginComponent:
+El componente LoginComponent contiene un formulario con dos campos: username (nombre de usuario) y password (contraseña).
+Al hacer submit (enviar el formulario), se ejecuta la función onSubmit(), que se encarga de llamar al servicio UserService para obtener la lista de usuarios.
+
+2. modelo_user.ts
+Tipo de datos: Garantiza que los datos de usuario que recibimos de la API tengan la estructura correcta (tipado).
+Consistencia: Al usar el modelo en el servicio y componente, aseguras que todos los usuarios manejados en la aplicación tengan las propiedades adecuadas.
+
+3. UserService:
+En el UserService, la función getUsers() realiza una solicitud HTTP a la API de usuarios (en este caso, a https://api.escuelajs.co/api/v1/users).
+Esta función retorna un Observable de tipo User[], es decir, una lista de todos los usuarios disponibles en la API.
+
+4. Verificación en LoginComponent:
+En el LoginComponent, cuando se recibe la lista de usuarios, se usa el método .find() de JavaScript para buscar si existe un usuario que coincida con el nombre de usuario y la contraseña ingresados.
+
+Si se encuentra un usuario con el nombre y contraseña correctos, se redirige al dashboard utilizando this.router.navigate(['/dashboard']).
+
+Si no se encuentra ningún usuario que coincida, se muestra una alerta usando window.alert('Usuario o contraseña incorrectos').
+
+En resumen, cuando el usuario ingresa sus credenciales y las envía, el LoginComponent se encarga de consultar al UserService, que obtiene los usuarios desde la API. Luego, el LoginComponent verifica si las credenciales coinciden con algún usuario de la lista y actúa en consecuencia: redirige al dashboard si son correctas, o muestra una alerta si no lo son.
+
+# PRUEBAS DE ESCRITORIO
+Primero entramos y escribimos las credenciales incorrectas , y se muestra la alerta. Luego, escribimos las credenciales correctas
+si quieres probar con alguno puedes probar con el usuario: "Jhon" y contraseña "123456" o cualquier otro usuario que se muestre en la imagen
+[USUARIOS API](<src/assets/images/LISTA DE USUARIOS API.png>)
+[LOGIN INCORRECTO](<src/assets/images/LOGIN INCORRECTO1.png>)
+[ALERTA](<src/assets/images/LOGIN INCORRECTO2.png>)
+[LOGIN CORRECTO](<src/assets/images/LOGIN CORRECTO.png>)
+
+AHORA PODEMOS ENTAR EN EL DASHBOARD Y VERIFICAR QUE SE MUESTREN LOS USUARIOS CORRECTOS CON SU PAGINACION PARA NO ESTAR AMONTONADOS Y FEOS LOS DATOS.
+[TABLA DE USUARIOS](<src/assets/images/TABLA DE USUARIOS.png>)
+
+[TABLA DE USUARIOS2](<src/assets/images/TABLA DE USUARIOS2.png>)
 
 
 
 
-[Application Screenshot](src/assets/images/LOGIN%20CORRECTO.png)
+
+[Application Screenshot](<src/assets/images/LOGIN%20CORRECTO.png)
 
 
 
