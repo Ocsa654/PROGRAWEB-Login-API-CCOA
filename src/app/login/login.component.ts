@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
+import { UserService } from '../services/user.service';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -15,13 +17,28 @@ export class LoginComponent {
   password: string = '';
   error: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   onSubmit() {
-    if (this.username === 'admin' && this.password === '1234') {
-      this.router.navigate(['/dashboard']);
-    } else {
-      this.error = 'Usuario o contraseña incorrectos';
-    }
+    this.userService.getUsers().subscribe(
+      (users: User[]) => {
+        const user = users.find(
+          u => u.name === this.username && u.password === this.password
+        );
+
+        if (user) {
+          // Usuario y contraseña correctos
+          this.router.navigate(['/dashboard']);
+        } else {
+          // Usuario o contraseña incorrectos
+          this.error = 'Usuario o contraseña incorrectos';
+        }
+      },
+      (error) => {
+        // Manejo de errores en la llamada a la API
+        this.error = 'Error de conexión. Inténtelo de nuevo.';
+        console.error(error);
+      }
+    );
   }
 }
