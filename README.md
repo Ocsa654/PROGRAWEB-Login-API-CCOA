@@ -91,8 +91,11 @@ En resumen, cuando el usuario ingresa sus credenciales y las envía, el LoginCom
 Primero entramos y escribimos las credenciales incorrectas , y se muestra la alerta. Luego, escribimos las credenciales correctas
 si quieres probar con alguno puedes probar con el usuario: "Jhon" y contraseña "123456" o cualquier otro usuario que se muestre en la imagen
 [USUARIOS API](<src/assets/images/LISTA DE USUARIOS API.png>)
+
 [LOGIN INCORRECTO](<src/assets/images/LOGIN INCORRECTO1.png>)
+
 [ALERTA](<src/assets/images/LOGIN INCORRECTO2.png>)
+
 [LOGIN CORRECTO](<src/assets/images/LOGIN CORRECTO.png>)
 
 AHORA PODEMOS ENTAR EN EL DASHBOARD Y VERIFICAR QUE SE MUESTREN LOS USUARIOS CORRECTOS CON SU PAGINACION PARA NO ESTAR AMONTONADOS Y FEOS LOS DATOS.
@@ -104,7 +107,6 @@ AHORA PODEMOS ENTAR EN EL DASHBOARD Y VERIFICAR QUE SE MUESTREN LOS USUARIOS COR
 
 
 
-[Application Screenshot](<src/assets/images/LOGIN%20CORRECTO.png)
 
 
 
