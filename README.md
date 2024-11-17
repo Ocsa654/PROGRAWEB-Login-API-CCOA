@@ -98,6 +98,19 @@ Tipo de datos: Garantiza que los datos de usuario que recibimos de la API tengan
 Consistencia: Al usar el modelo en el servicio y componente, aseguras que todos los usuarios manejados en la aplicación tengan las propiedades adecuadas.
 
 
+ ```
+export interface User {
+    id: number;
+    email: string;
+    password: string;
+    name: string;
+    role: string;
+    avatar: string;
+    creationAt: string;
+    updatedAt: string;
+  }
+ ```
+
 3. UserService:
 En el UserService, la función getUsers() realiza una solicitud HTTP a la API de usuarios (en este caso, a https://api.escuelajs.co/api/v1/users).
 Esta función retorna un Observable de tipo User[], es decir, una lista de todos los usuarios disponibles en la API.
