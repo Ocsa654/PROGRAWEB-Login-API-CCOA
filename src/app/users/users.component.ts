@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../services/user.service';
@@ -28,6 +27,7 @@ import { User } from '../models/user.model';
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Password</th>
                     <th>Role</th>
                     <th>Avatar</th>
                   </tr>
@@ -37,6 +37,7 @@ import { User } from '../models/user.model';
                     <td>{{ user.id }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
+                    <td>{{ user.password }}</td>
                     <td>{{ user.role }}</td>
                     <td>
                       <img [src]="user.avatar" [alt]="user.name" width="50">
@@ -66,20 +67,22 @@ import { User } from '../models/user.model';
       }
 
       .card {
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(to bottom, #ffffff, #f8f9fa);
       }
 
       .card-header {
-        background-color: #f4f6f9;
+        background: #007bff;
+        color: white;
         padding: 16px;
-        border-radius: 8px 8px 0 0;
+        border-radius: 10px 10px 0 0;
+        text-align: center;
       }
 
       .card-title {
         margin: 0;
-        font-size: 1.25rem;
+        font-size: 1.5rem;
         font-weight: bold;
       }
 
@@ -95,20 +98,29 @@ import { User } from '../models/user.model';
         width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
       }
 
       .user-table th, .user-table td {
         text-align: left;
         padding: 12px;
         border-bottom: 1px solid #ddd;
+        font-size: 14px;
       }
 
       .user-table th {
-        background-color: #f4f6f9;
+        background: #007bff;
+        color: white;
+      }
+
+      .user-table tr:nth-child(even) {
+        background-color: #f2f2f2;
       }
 
       .user-table tr:hover {
-        background-color: #f1f1f1;
+        background-color: #e8e8e8;
       }
 
       .pagination {
@@ -116,21 +128,27 @@ import { User } from '../models/user.model';
         justify-content: space-between;
         align-items: center;
         margin-top: 16px;
+        font-size: 14px;
       }
 
       .pagination-buttons {
         display: flex;
-        gap: 8px;
+        gap: 10px;
       }
 
       .btn {
-        padding: 8px 16px;
+        padding: 10px 20px;
         border: none;
         background-color: #007bff;
         color: white;
         font-size: 14px;
         cursor: pointer;
-        border-radius: 4px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
       }
 
       .btn:disabled {
