@@ -70,6 +70,23 @@ app/dashboard: Componente que muestra varias secciones del Dashboard, como la li
 El componente LoginComponent contiene un formulario con dos campos: username (nombre de usuario) y password (contraseña).
 Al hacer submit (enviar el formulario), se ejecuta la función onSubmit(), que se encarga de llamar al servicio UserService para obtener la lista de usuarios.
 
+```
+ this.userService.getUsers().subscribe
+    (users: User[]) => {
+      const user = users.find(
+        u => u.name === this.username && u.password === this.password
+      );
+
+      if (user) {
+        // Usuario y contraseña correctos
+        this.router.navigate(['/dashboard']);
+      } else {
+        // Usuario o contraseña incorrectos: mostrar alerta
+        window.alert('Usuario o contraseña incorrectos');
+      }
+ ```
+
+
 2. modelo_user.ts
 Tipo de datos: Garantiza que los datos de usuario que recibimos de la API tengan la estructura correcta (tipado).
 Consistencia: Al usar el modelo en el servicio y componente, aseguras que todos los usuarios manejados en la aplicación tengan las propiedades adecuadas.
