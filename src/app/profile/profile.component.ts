@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { User } from '../models/user.model';
 
@@ -31,6 +32,7 @@ import { User } from '../models/user.model';
             <p>{{ user?.updatedAt | date:'longDate' }}</p>
           </div>
         </div>
+        <button class="logout-button" (click)="logout()">Logout</button>
       </div>
     </div>
   `,
@@ -126,10 +128,29 @@ import { User } from '../models/user.model';
       font-size: 16px;
       color: #444;
     }
+
+    .logout-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      background: #d32f2f;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .logout-button:hover {
+      background: #b71c1c;
+    }
   `]
 })
 export class ProfileComponent implements OnInit {
   user: User | null = null;
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.loadUserProfile();
@@ -142,5 +163,10 @@ export class ProfileComponent implements OnInit {
     } else {
       console.error('No user is logged in');
     }
+  }
+
+  logout(): void {
+    localStorage.removeItem('loggedUser');
+    this.router.navigate(['/login']);
   }
 }
