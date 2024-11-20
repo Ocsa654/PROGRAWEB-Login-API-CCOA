@@ -58,6 +58,9 @@ import { User } from '../models/user.model';
                       <button (click)="viewUserInfo(user)" class="info-btn">
                         <i class="fa fa-info-circle"></i> Info
                       </button>
+                      <button (click)="deleteUser(user)" class="delete-btn">
+                        <i class="fa fa-trash"></i> Delete
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -77,143 +80,158 @@ import { User } from '../models/user.model';
   `,
   styles: [
     `
-      /* General styles for the table and container */
-      .table-container {
-        padding: 20px;
-      }
+    .table-container {
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    
+    .card {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
 
-      .card {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-      }
+    .card-header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      font-size: 1.5em;
+    }
 
-      .card-header {
-        background-color: #f7f7f7;
-        padding: 15px;
-        font-size: 1.5rem;
-        font-weight: bold;
-      }
+    .card-content {
+      padding: 20px;
+    }
 
-      .card-content {
-        padding: 15px;
-      }
+    .user-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
 
-      .table-responsive {
-        overflow-x: auto;
-      }
+    .user-table th,
+    .user-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
 
-      .user-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-      }
+    .user-table th {
+      background-color: #f1f1f1;
+    }
 
-      .user-table th, .user-table td {
-        padding: 10px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
+    .actions-cell {
+      display: flex;
+      gap: 10px;
+    }
 
-      .user-table th {
-        background-color: #f2f2f2;
-        cursor: pointer;
-      }
+    .edit-btn, .info-btn, .delete-btn {
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
 
-      .skeleton-container {
-        display: flex;
-        flex-direction: column;
-      }
+    .edit-btn {
+      background-color: #4CAF50;
+      color: white;
+    }
 
-      .skeleton {
-        height: 20px;
-        background-color: #ccc;
-        margin-bottom: 10px;
-        border-radius: 4px;
-      }
+    .edit-btn:hover {
+      background-color: #45a049;
+    }
 
-      /* Pagination styles */
-      .pagination {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-top: 10px;
-      }
+    .info-btn {
+      background-color: #2196F3;
+      color: white;
+    }
 
-      .pagination-buttons {
-        display: flex;
-        gap: 10px;
-      }
+    .info-btn:hover {
+      background-color: #1e88e5;
+    }
 
-      /* Action button styles */
-      .actions-cell {
-        display: flex;
-        gap: 10px;
-      }
+    .delete-btn {
+      background-color: #f44336;
+      color: white;
+    }
 
-      .edit-btn, .info-btn {
-        padding: 6px 12px;
-        font-size: 14px;
-        margin-right: 10px;
-        cursor: pointer;
-        border: none;
-        border-radius: 5px;
-        display: flex;
-        align-items: center;
-      }
+    .delete-btn:hover {
+      background-color: #e53935;
+    }
 
-      .edit-btn {
-        background-color: #28a745;
-        color: white;
-      }
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
 
-      .info-btn {
-        background-color: #17a2b8;
-        color: white;
-      }
+    .pagination-buttons {
+      display: flex;
+      gap: 10px;
+    }
 
-      .edit-btn:hover {
-        background-color: #218838;
-      }
+    .pagination-btn {
+      background-color: #6200ea;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-      .info-btn:hover {
-        background-color: #138496;
-      }
+    .pagination-btn:hover {
+      background-color: #3700b3;
+    }
 
-      .edit-btn:focus, .info-btn:focus {
-        outline: none;
-      }
+    .skeleton-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-      .edit-btn i, .info-btn i {
-        margin-right: 5px;
-      }
+    .skeleton {
+      background-color: #ddd;
+      height: 20px;
+      width: 100%;
+      border-radius: 5px;
+      animation: skeleton-loading 1.5s infinite;
+    }
 
-      /* Sorting icon styles */
-      .sort-icon {
-        margin-left: 5px;
-        font-size: 12px;
-        color: #888;
+    @keyframes skeleton-loading {
+      0% {
+        background-color: #ddd;
       }
+      50% {
+        background-color: #e0e0e0;
+      }
+      100% {
+        background-color: #ddd;
+      }
+    }
 
-      .ascending::after {
-        content: '▲';
-      }
+    .sort-icon {
+      margin-left: 5px;
+      font-size: 0.8em;
+      opacity: 0.5;
+    }
 
-      .descending::after {
-        content: '▼';
-      }
+    .ascending::after {
+      content: "↑";
+    }
 
-      /* Image styles */
-      .avatar {
-        width: 40px;
-        height: 40px;
-        object-fit: cover;
-        border-radius: 50%;
-        margin: 0 auto;
-      }
-    `
-  ]
+    .descending::after {
+      content: "↓";
+    }
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }  `]
 })
 export class UsersComponent implements OnInit {
   users: User[] = [];
@@ -305,8 +323,24 @@ export class UsersComponent implements OnInit {
   }
 
   editUser(user: User) {
-    alert(`Editing user: ${user.name}`);
-    // Aquí puedes agregar la lógica para abrir un menú o formulario de edición.
+    const editedUser = { ...user }; // Clonar el usuario para modificarlo
+    const newName = prompt('Edit the user name:', editedUser.name);
+    if (newName) {
+      editedUser.name = newName;
+      const index = this.users.findIndex(u => u.id === user.id);
+      if (index !== -1) {
+        this.users[index] = editedUser; // Actualizar la lista local
+        this.updateDisplayedUsers(); // Actualizar la vista
+      }
+    }
+  }
+
+  deleteUser(user: User) {
+    const confirmDelete = confirm(`Are you sure you want to delete ${user.name}?`);
+    if (confirmDelete) {
+      this.users = this.users.filter(u => u.id !== user.id); // Eliminar de la lista local
+      this.updateDisplayedUsers(); // Actualizar la vista
+    }
   }
 
   viewUserInfo(user: User) {

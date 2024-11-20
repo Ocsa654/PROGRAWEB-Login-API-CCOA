@@ -7,6 +7,9 @@ import { User } from '../models/user.model';
   providedIn: 'root'
 })
 export class UserService {
+  deleteUser(id: number) {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = 'https://api.escuelajs.co/api/v1/users';
 
   constructor(private http: HttpClient) {}
@@ -15,4 +18,5 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);
   }
+  
 }
