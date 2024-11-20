@@ -19,27 +19,29 @@ export class LoginComponent {
 
   constructor(private userService: UserService, private router: Router) {}
 
-onSubmit() {
-  this.userService.getUsers().subscribe(
-    (users: User[]) => {
-      const user = users.find(
-        u => u.name === this.username && u.password === this.password
-      );
-
-      if (user) {
-        // Usuario y contraseña correctos
-        this.router.navigate(['/dashboard']);
-      } else {
-        // Usuario o contraseña incorrectos: mostrar alerta
-        window.alert('Usuario o contraseña incorrectos');
+  onSubmit() {
+    this.userService.getUsers().subscribe(
+      (users: User[]) => {
+        const user = users.find(
+          u => u.name === this.username && u.password === this.password
+        );
+  
+        if (user) {
+          // Usuario y contraseña correctos: almacenar información en localStorage
+          localStorage.setItem('loggedUser', JSON.stringify(user));
+          this.router.navigate(['/dashboard']);
+        } else {
+          // Usuario o contraseña incorrectos: mostrar alerta
+          window.alert('Usuario o contraseña incorrectos');
+        }
+      },
+      (error) => {
+        // Manejo de errores en la llamada a la API
+        window.alert('Error de conexión. Inténtelo de nuevo.');
+        console.error(error);
       }
-    },
-    (error) => {
-      // Manejo de errores en la llamada a la API
-      window.alert('Error de conexión. Inténtelo de nuevo.');
-      console.error(error);
-    }
-  );
-}
+    );
+  }
+  
 
 }
